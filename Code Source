@@ -1,0 +1,70 @@
+#RequireAdmin
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=..\..\..\Downloads\1479274078_settings-applications.ico
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+#include <ButtonConstants.au3>
+#include <EditConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <ProgressConstants.au3>
+#include <WindowsConstants.au3>
+
+$Form1 = GUICreate("WizzDL", 202, 155, 192, 124)
+$Group1 = GUICtrlCreateGroup("", 8, 8, 185, 73)
+$Checkbox1 = GUICtrlCreateCheckbox("EzBot", 24, 24, 49, 17)
+$Checkbox2 = GUICtrlCreateCheckbox("EloBuddy", 112, 24, 65, 17)
+$Checkbox3 = GUICtrlCreateCheckbox("PureVpn", 24, 48, 65, 17)
+$Checkbox4 = GUICtrlCreateCheckbox("Help.txt", 112, 48, 70, 17)
+$Edit1 = GUICtrlCreateEdit("", 16, 24, 169, 49, BitOR($ES_AUTOVSCROLL,$ES_AUTOHSCROLL,$ES_WANTRETURN, $ES_READONLY))
+GUICtrlSetData(-1, "")
+GUICtrlSetState(-1, $GUI_HIDE)
+GUICtrlCreateGroup("", -99, -99, 1, 1)
+$Progress1 = GUICtrlCreateProgress(17, 128, 166, 17)
+$Button1 = GUICtrlCreateButton("Download", 63, 96, 75, 25)
+GUISetState(@SW_SHOW)
+
+
+While 1
+	$nMsg = GUIGetMsg()
+	Switch $nMsg
+		Case $GUI_EVENT_CLOSE
+			Exit
+		Case $Button1
+			dl()
+	EndSwitch
+WEnd
+
+Func dl()
+	GUICtrlSetState($Checkbox1, $GUI_HIDE)
+	GUICtrlSetState($Checkbox2, $GUI_HIDE)
+	GUICtrlSetState($Checkbox3, $GUI_HIDE)
+	GUICtrlSetState($Checkbox4, $GUI_HIDE)
+	GUICtrlSetState($Edit1, $GUI_Show)
+	GUICtrlSetData($Progress1, "25")
+		If GUICtrlRead($Checkbox1) = $GUI_CHECKED Then
+			GuiCtrlSetData($Edit1, "Téléchargement de EzBot.Zip..." & @CRLF, 1)
+			InetGet("https://github.com/hesa2020/HesaElobuddy/raw/master/eZ_Source/ezbot.zip", "ezbot.zip")
+			GuiCtrlSetData($Edit1, "EzBot.zip : Téléchargé !" & @CRLF, 1)
+		EndIf
+
+	GUICtrlSetData($Progress1, "50")
+		If GUICtrlRead($Checkbox2) = $GUI_CHECKED Then
+			GuiCtrlSetData($Edit1, "Téléchargement de EloBuddy..." & @CRLF)
+			InetGet("https://www.elobuddy.net/forum/63-eb-download/", "EloBuddy-Setup.exe")
+			GuiCtrlSetData($Edit1, "EloBuddy-Setup.exe : Téléchargé :" & @CRLF, 1)
+		EndIf
+	GUICtrlSetData($Progress1, "75")
+		If GUICtrlRead($Checkbox3) = $GUI_CHECKED Then
+			GuiCtrlSetData($Edit1, "Téléchargement de PureVPN..." & @CRLF)
+			InetGet("https://s3.amazonaws.com/purevpn-dialer-assets/windows/app/purevpn_setup.exe", "purevpn_setup.exe")
+			GuiCtrlSetData($Edit1, "Purevpn_setup.exe : Téléchargé :" & @CRLF, 1)
+		EndIf
+		GUICtrlSetData($Progress1, "100")
+		If GUICtrlRead($Checkbox4) = $GUI_CHECKED Then
+			GuiCtrlSetData($Edit1, "Téléchargement de Help.txt..." & @CRLF)
+			InetGet("https://github-cloud.s3.amazonaws.com/releases/73864354/2068d836-ab93-11e6-9e17-f15256d97510.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAISTNZFOVBIJMK3TQ%2F20161115%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20161115T232519Z&X-Amz-Expires=300&X-Amz-Signature=53bf341ae2d8955d22cbf909836cdc9519a3db6b5f71f8ac9a270b79777781e6&X-Amz-SignedHeaders=host&actor_id=2243455&response-content-disposition=attachment%3B%20filename%3DHelp.txt&response-content-type=application%2Foctet-stream", "Help.txt")
+			GuiCtrlSetData($Edit1, "Help.txt : Téléchargé :" & @CRLF, 1)
+		EndIf
+		GUISetState(@SW_HIDE)
+		MsgBox(0, "Downloader", "Téléchargement terminé !")
+		Exit
+EndFunc
